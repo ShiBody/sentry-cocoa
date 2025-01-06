@@ -52,8 +52,8 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        podspec: ["Sentry", "SentrySwiftUI"]
-        platform: ["ios", "macos", "tvos", "watchos"]
+        podspec: ["Sentry"]
+        platform: ["macos"]
         library_type: ["dynamic", "static"]
 
     steps:

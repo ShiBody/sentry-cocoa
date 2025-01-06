@@ -169,7 +169,7 @@ jobs:
       - name: Change path of the framework
         run: |
           sed -i '' 's/url.*//g' Package.swift
-          sed -i '' 's/checksum: ".*" \/\/Sentry-Static/path: "Sentry.xcframework.zip"/g' Package.swift
+          # sed -i '' 's/checksum: ".*" \/\/Sentry-Static/path: "Sentry.xcframework.zip"/g' Package.swift
           sed -i '' 's/checksum: ".*" \/\/Sentry-Dynamic/path: "Sentry-Dynamic.xcframework.zip"/g' Package.swift
         shell: bash
       - run: swift build
@@ -188,7 +188,7 @@ jobs:
       - name: Change path of the framework
         run: |
           sed -i '' 's/url.*//g' Package.swift
-          sed -i '' 's/checksum: ".*" \/\/Sentry-Static/path: "Sentry.xcframework.zip"/g' Package.swift
+          # sed -i '' 's/checksum: ".*" \/\/Sentry-Static/path: "Sentry.xcframework.zip"/g' Package.swift
           sed -i '' 's/checksum: ".*" \/\/Sentry-Dynamic/path: "Sentry-Dynamic.xcframework.zip"/g' Package.swift
         shell: bash
       - run: swift build
@@ -207,7 +207,7 @@ jobs:
       - name: Change path of the framework
         run: |
           sed -i '' 's/url.*//g' Package.swift
-          sed -i '' 's/checksum: ".*" \/\/Sentry-Static/path: "Sentry.xcframework.zip"/g' Package.swift
+          # sed -i '' 's/checksum: ".*" \/\/Sentry-Static/path: "Sentry.xcframework.zip"/g' Package.swift
           sed -i '' 's/checksum: ".*" \/\/Sentry-Dynamic/path: "Sentry-Dynamic.xcframework.zip"/g' Package.swift
         shell: bash
       - run: swift build

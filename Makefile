@@ -59,13 +59,9 @@ analyze:
 # After creating the zips we create a JSON to be able to test Carthage locally.
 # For more info check out: https://github.com/Carthage/Carthage/releases/tag/0.38.0
 build-xcframework:
-	@echo "--> Carthage: creating Sentry xcframework"
 	./scripts/build-xcframework.sh > build-xcframework.log
 # use ditto here to avoid clobbering symlinks which exist in macOS frameworks
-	ditto -c -k -X --rsrc --keepParent Carthage/Sentry.xcframework Carthage/Sentry.xcframework.zip
 	ditto -c -k -X --rsrc --keepParent Carthage/Sentry-Dynamic.xcframework Carthage/Sentry-Dynamic.xcframework.zip
-	ditto -c -k -X --rsrc --keepParent Carthage/SentrySwiftUI.xcframework Carthage/SentrySwiftUI.xcframework.zip
-	ditto -c -k -X --rsrc --keepParent Carthage/Sentry-WithoutUIKitOrAppKit.xcframework Carthage/Sentry-WithoutUIKitOrAppKit.zip
 
 build-xcframework-sample:
 	./scripts/create-carthage-json.sh
