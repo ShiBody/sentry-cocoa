@@ -553,7 +553,7 @@
     if (main_thread && nil != main_thread.stacktrace) {
         [result addObject:main_thread];
     }
-    // make sure main is in index 1
+    // make sure crash thread is in index 1
     if (self.crashedThreadIndex > 0) {
         SentryThread *crashed_thread = [self threadAtIndex:self.crashedThreadIndex];
         if (crashed_thread && nil != crashed_thread.stacktrace) {
