@@ -548,7 +548,21 @@
 - (NSArray *)convertThreads
 {
     NSMutableArray *result = [NSMutableArray new];
-    for (NSInteger threadIndex = 0; threadIndex < (NSInteger)self.threads.count; threadIndex++) {
+    // make sure main is in index 0
+    SentryThread *main_thread = [self threadAtIndex:0];
+    if (main_thread && nil != main_thread.stacktrace) {
+        [result addObject:main_thread];
+    }
+    // make sure main is in index 1
+    if (self.crashedThreadIndex > 0) {
+        SentryThread *crashed_thread = [self threadAtIndex:self.crashedThreadIndex];
+        if (crashed_thread && nil != crashed_thread.stacktrace) {
+            [result addObject:crashed_thread];
+        }
+    }
+    for (NSInteger threadIndex = 1;
+        threadIndex < (NSInteger)self.threads.count && threadIndex != self.crashedThreadIndex;
+        threadIndex++) {
         SentryThread *thread = [self threadAtIndex:threadIndex];
         if (thread && nil != thread.stacktrace) {
             [result addObject:thread];
