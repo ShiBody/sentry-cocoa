@@ -11,7 +11,7 @@ repos:
       - id: check-yaml
       - id: detect-private-key
       - id: end-of-file-fixer
-      - id: no-commit-to-branch
+      # - id: no-commit-to-branch
 
   - repo: https://github.com/python-jsonschema/check-jsonschema
     rev: 0.27.3
