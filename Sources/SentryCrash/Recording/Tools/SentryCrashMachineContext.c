@@ -70,6 +70,43 @@ getThreadList(SentryCrashMachineContext *context)
         SENTRY_ASYNC_SAFE_LOG_ERROR("task_threads: %s", mach_error_string(kr));
         return false;
     }
+    //    // Find crashed thread
+    //    int idx = 0;
+    //    for (mach_msg_type_number_t i = 0; i < actualThreadCount; i++) {
+    //        thread_t thread = threads[i];
+    //
+    //        // Get exception state
+    //        #if defined(__x86_64__)
+    //        x86_exception_state64_t exceptionState;
+    //        mach_msg_type_number_t stateCount = x86_EXCEPTION_STATE64_COUNT;
+    //        thread_state_flavor_t flavor = x86_EXCEPTION_STATE64;
+    //        #elif defined(__arm64__)
+    //        arm_exception_state64_t exceptionState;
+    //        mach_msg_type_number_t stateCount = ARM_EXCEPTION_STATE64_COUNT;
+    //        thread_state_flavor_t flavor = ARM_EXCEPTION_STATE64;
+    //        #endif
+    //
+    //        kr = thread_get_state(thread,
+    //                            flavor,
+    //                            (thread_state_t)&exceptionState,
+    //                            &stateCount);
+    //
+    //        if (kr == KERN_SUCCESS) {
+    //            #if defined(__x86_64__)
+    //            if (exceptionState.__trapno != 0) {
+    //                context->allThreads[0] = thread;
+    //                idx++;
+    //                break;
+    //            }
+    //            #elif defined(__arm64__)
+    //            if (exceptionState.__far != 0 || exceptionState.__esr != 0) {
+    //                context->allThreads[0] = thread;
+    //                idx++;
+    //                break;
+    //            }
+    //            #endif
+    //        }
+    //    }
     SENTRY_ASYNC_SAFE_LOG_TRACE("Got %d threads", context->threadCount);
     int threadCount = (int)actualThreadCount;
     int maxThreadCount = sizeof(context->allThreads) / sizeof(context->allThreads[0]);
@@ -78,6 +115,11 @@ getThreadList(SentryCrashMachineContext *context)
             "Thread count %d is higher than maximum of %d", threadCount, maxThreadCount);
         threadCount = maxThreadCount;
     }
+
+    //    for (int i = 0; idx < threadCount && i < actualThreadCount; i++) {
+    //        context->allThreads[idx] = threads[i];
+    //        idx++;
+    //    }
     for (int i = 0; i < threadCount; i++) {
         context->allThreads[i] = threads[i];
     }
