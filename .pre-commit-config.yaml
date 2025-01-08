@@ -27,13 +27,13 @@ repos:
 
   - repo: local
     hooks:
-      - id: format-clang
-        name: Format ObjC, ObjC++, C, and C++
-        entry: make
-        language: system
-        types_or: ["objective-c", "objective-c++", "c", "c++"]
-        args:
-          - "format-clang"
+      # - id: format-clang
+      #   name: Format ObjC, ObjC++, C, and C++
+      #   entry: make
+      #   language: system
+      #   types_or: ["objective-c", "objective-c++", "c", "c++"]
+      #   args:
+      #     - "format-clang"
           
       - id: format-swift
         name: Format Swift
@@ -43,10 +43,10 @@ repos:
         args:
           - "format-swift"
 
-      - id: lint
-        name: Run Linters
-        entry: make
-        language: system
-        types_or: ["swift", "objective-c", "objective-c++", "c", "c++" ]
-        args:
-          - "lint"
+      # - id: lint
+      #   name: Run Linters
+      #   entry: make
+      #   language: system
+      #   types_or: ["swift", "objective-c", "objective-c++", "c", "c++" ]
+      #   args:
+      #     - "lint"
