@@ -131,6 +131,7 @@ static void *
 monitorCachedData(__unused void *const userData)
     SENTRY_DISABLE_THREAD_SANITIZER("Known data race to fix")
 {
+    pthread_setname_np("Sentry::monitorCachedData"); //webex
     static int quickPollCount = 4;
     usleep(1);
     for (;;) {

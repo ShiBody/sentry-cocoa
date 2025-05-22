@@ -206,6 +206,16 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
     return SentryId.empty;
 }
 
+//webex
+id getReservedProperty(NSException *exception) {
+    Ivar reservedIvar = class_getInstanceVariable([exception class], "reserved");
+    if (reservedIvar) {
+        // Get the value of the private ivar
+        return object_getIvar(exception, reservedIvar);
+    }
+    return nil;
+}
+
 - (SentryEvent *)buildExceptionEvent:(NSException *)exception
 {
     SentryEvent *event = [[SentryEvent alloc] initWithLevel:kSentryLevelError];
@@ -213,7 +223,26 @@ NSString *const DropSessionLogMessage = @"Session has no release name. Won't sen
                                                                          type:exception.name];
 
     event.exceptions = @[ sentryException ];
-    [self setUserInfo:exception.userInfo withEvent:event];
+    
+    //webex
+    id userInfo = [NSMutableDictionary dictionaryWithDictionary:exception.userInfo];
+    id reserved = getReservedProperty(exception);
+    if (reserved
+        && [reserved isKindOfClass:[NSMutableDictionary class]]
+        && [reserved objectForKey:@"callStackSymbols"])
+    {
+        
+        id callStackSymbols = reserved[@"callStackSymbols"];
+        
+        if (userInfo == nil) {
+            userInfo = @{ @"callStackSymbols" : callStackSymbols };
+        }
+        else {
+            userInfo[@"callStackSymbols"] = [reserved objectForKey:@"callStackSymbols"];
+        }
+        
+    }
+    [self setUserInfo:[NSDictionary dictionaryWithDictionary:userInfo] withEvent:event];
     return event;
 }
 
