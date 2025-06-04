@@ -9,7 +9,7 @@ if [ "$args" = "iOSOnly" ]; then
 elif [ "$args" = "gameOnly" ]; then
     sdks=( iphoneos iphonesimulator macosx )
 else
-    sdks=( iphoneos iphonesimulator macosx appletvos appletvsimulator watchos watchsimulator xros xrsimulator )
+    sdks=( macosx )
 fi
 
 rm -rf Carthage/

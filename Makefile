@@ -127,11 +127,10 @@ build-xcframework:
 	@echo "--> Carthage: creating Sentry xcframework"
 	./scripts/build-xcframework.sh | tee build-xcframework.log
 	./scripts/zip_built_sdks.sh
+# use ditto here to avoid clobbering symlinks which exist in macOS frameworks
+	# ditto -c -k -X --rsrc --keepParent Carthage/Sentry.xcframework Carthage/Sentry.xcframework.zip
+	# ditto -c -k -X --rsrc --keepParent Carthage/Sentry-Dynamic.xcframework Carthage/Sentry-Dynamic.xcframework.zip
 
-build-signed-xcframework:
-	@echo "--> Carthage: creating Signed Sentry xcframework"
-	./scripts/build-xcframework.sh | tee build-xcframework.log
-	./scripts/zip_built_sdks.sh --sign
 
 build-xcframework-sample:
 	./scripts/create-carthage-json.sh
