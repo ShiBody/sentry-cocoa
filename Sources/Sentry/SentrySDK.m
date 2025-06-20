@@ -250,7 +250,7 @@ static NSDate *_Nullable startTimestamp = nil;
 
     SENTRY_LOG_DEBUG(@"Dispatching init work required to run on main thread.");
     [SentryDependencyContainer.sharedInstance.dispatchQueueWrapper dispatchAsyncOnMainQueue:^{
-        SENTRY_LOG_DEBUG(@"SDK main thread init started...");
+        SENTRY_LOG_DEBUG(@"SXX SDK main thread init started...");
 
         // The UIDeviceWrapper needs to start before the Hub, because the Hub
         // enriches the scope, which calls the UIDeviceWrapper.
@@ -280,6 +280,7 @@ static NSDate *_Nullable startTimestamp = nil;
 {
     SentryOptions *options = [[SentryOptions alloc] init];
     configureOptions(options);
+    options.experimental.enableUnhandledCPPExceptionsV2 = YES;
     [SentrySDK startWithOptions:options];
 }
 

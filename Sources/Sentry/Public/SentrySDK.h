@@ -274,6 +274,17 @@ SENTRY_NO_INIT
  */
 + (void)captureFeedback:(SentryFeedback *)feedback NS_SWIFT_NAME(capture(feedback:));
 
+#if TARGET_OS_OSX
+/**
+ * Captures an exception event and sends it to Sentry using the stacktrace from the exception.
+ * @param exception The exception to send to Sentry.
+ * @return The @c SentryId of the event or @c SentryId.empty if the event is not sent.
+ *
+ */
++ (SentryId *)captureCrashOnException:(NSException *)exception
+    NS_SWIFT_NAME(captureCrashOn(exception:));
+
+#endif // TARGET_OS_OSX
 #if TARGET_OS_IOS && SENTRY_HAS_UIKIT
 
 @property (nonatomic, class, readonly) SentryFeedbackAPI *feedback API_AVAILABLE(ios(13.0));

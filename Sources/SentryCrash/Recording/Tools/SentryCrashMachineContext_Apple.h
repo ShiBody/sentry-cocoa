@@ -45,7 +45,7 @@ extern "C" {
 
 typedef struct SentryCrashMachineContext {
     thread_t thisThread;
-    thread_t allThreads[100];
+    thread_t allThreads[200];
     int threadCount;
     bool isCrashedContext;
     bool isCurrentThread;
