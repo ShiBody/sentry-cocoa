@@ -23,6 +23,7 @@
 {
     [SentrySDK captureCrashOnException:exception];
 #    if !(SENTRY_TEST || SENTRY_TEST_CI)
+    [SentrySDK flush:5.0];
     abort();
 #    endif
 }

@@ -7,6 +7,7 @@
 #    import "SentrySwizzle.h"
 #    import "SentryUncaughtNSExceptions.h"
 #    import <AppKit/NSApplication.h>
+#    import "SentryCrashExceptionApplicationHelper.h"
 
 NS_ASSUME_NONNULL_BEGIN
 
@@ -29,18 +30,27 @@ NS_ASSUME_NONNULL_BEGIN
             return SentrySWCallOriginal(exception);
         }),
         SentrySwizzleModeOncePerClassAndSuperclasses, (void *)selector);
+    
+    SEL selector2 = NSSelectorFromString(@"_crashOnException:");
+    SentrySwizzleInstanceMethod(NSApplication, selector2, SentrySWReturnType(void),
+        SentrySWArguments(NSException * exception), SentrySWReplacement({
+            [SentryCrashExceptionApplicationHelper _crashOnException:exception];
+            return SentrySWCallOriginal(exception);
+        }),
+        SentrySwizzleModeOncePerClassAndSuperclasses, (void *)selector2);
 #    pragma clang diagnostic pop
 }
 
 + (void)capture:(nullable NSException *)exception
 {
     SentryCrash *crash = SentryDependencyContainer.sharedInstance.crashReporter;
-
-    if (crash.uncaughtExceptionHandler == nil) {
+    
+    if (exception == nil) {
         return;
     }
 
-    if (exception == nil) {
+    if (crash.uncaughtExceptionHandler == nil) {
+        [SentryCrashExceptionApplicationHelper reportException:exception];
         return;
     }
 
