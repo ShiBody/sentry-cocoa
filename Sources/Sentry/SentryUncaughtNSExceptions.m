@@ -50,7 +50,7 @@ NS_ASSUME_NONNULL_BEGIN
     }
 
     if (crash.uncaughtExceptionHandler == nil) {
-        [SentryCrashExceptionApplicationHelper reportException:exception];
+//        [SentryCrashExceptionApplicationHelper reportException:exception];
         return;
     }
 
